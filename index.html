@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Matt Knatt — Java Developer</title>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0d1117;
+      --bg2: #161b22;
+      --bg3: #21262d;
+      --border: #30363d;
+      --text: #e6edf3;
+      --muted: #7d8590;
+      --accent: #58a6ff;
+      --accent2: #3fb950;
+      --accent3: #f78166;
+      --accent4: #d2a8ff;
+      --yellow: #e3b341;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 14px;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* Scanline overlay */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        rgba(0,0,0,0.03) 2px,
+        rgba(0,0,0,0.03) 4px
+      );
+      pointer-events: none;
+      z-index: 1000;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      background: rgba(13,17,23,0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 2rem;
+      height: 52px;
+    }
+
+    .nav-logo {
+      color: var(--accent2);
+      font-weight: 700;
+      font-size: 13px;
+      letter-spacing: 0.05em;
+    }
+
+    .nav-logo span { color: var(--muted); }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 12px;
+      letter-spacing: 0.05em;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--text); }
+
+    /* HERO */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding: 6rem 2rem 4rem;
+      max-width: 900px;
+      margin: 0 auto;
+      position: relative;
+    }
+
+    .hero-inner {
+      width: 100%;
+    }
+
+    .hero-prompt {
+      color: var(--muted);
+      font-size: 12px;
+      margin-bottom: 0.5rem;
+      letter-spacing: 0.05em;
+    }
+
+    .hero-prompt::before {
+      content: '$ ';
+      color: var(--accent2);
+    }
+
+    .hero-name {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(3rem, 8vw, 6rem);
+      line-height: 1.0;
+      color: var(--text);
+      margin-bottom: 0.25rem;
+    }
+
+    .hero-name em {
+      font-style: italic;
+      color: var(--accent);
+    }
+
+    .hero-role {
+      font-size: 13px;
+      color: var(--accent2);
+      letter-spacing: 0.1em;
+      margin-bottom: 2rem;
+    }
+
+    .hero-role::before { content: '// '; color: var(--muted); }
+
+    .hero-bio {
+      max-width: 520px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.9;
+      margin-bottom: 2.5rem;
+      border-left: 2px solid var(--border);
+      padding-left: 1.25rem;
+    }
+
+    .hero-bio strong { color: var(--text); font-weight: 500; }
+
+    .hero-cta {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.6rem 1.25rem;
+      border-radius: 6px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      font-weight: 500;
+      text-decoration: none;
+      letter-spacing: 0.05em;
+      transition: all 0.2s;
+      cursor: pointer;
+      border: none;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: var(--bg);
+    }
+
+    .btn-primary:hover { background: #79c0ff; transform: translateY(-1px); }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--muted);
+      border: 1px solid var(--border);
+    }
+
+    .btn-ghost:hover { color: var(--text); border-color: var(--muted); }
+
+    /* Avatar */
+    .avatar-float {
+      position: absolute;
+      right: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 200px;
+      height: 200px;
+      opacity: 0.85;
+    }
+
+    .avatar-float img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      image-rendering: pixelated;
+    }
+
+    .avatar-label {
+      text-align: center;
+      font-size: 10px;
+      color: var(--muted);
+      margin-top: 6px;
+      letter-spacing: 0.08em;
+    }
+
+    /* SECTION */
+    section {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 5rem 2rem;
+      border-top: 1px solid var(--border);
+    }
+
+    .section-tag {
+      font-size: 11px;
+      color: var(--accent4);
+      letter-spacing: 0.15em;
+      margin-bottom: 0.5rem;
+    }
+
+    .section-tag::before { content: '/* '; }
+    .section-tag::after { content: ' */'; }
+
+    .section-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: 2.5rem;
+      color: var(--text);
+      margin-bottom: 3rem;
+      line-height: 1.1;
+    }
+
+    /* PROJECTS */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+    }
+
+    .project-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.5rem;
+      transition: border-color 0.2s, transform 0.2s;
+      text-decoration: none;
+      display: block;
+    }
+
+    .project-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+    }
+
+    .project-card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 0.75rem;
+    }
+
+    .project-icon {
+      font-size: 20px;
+    }
+
+    .project-lang {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    .lang-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--yellow);
+      flex-shrink: 0;
+    }
+
+    .project-name {
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--accent);
+      margin-bottom: 0.5rem;
+    }
+
+    .project-desc {
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.7;
+      margin-bottom: 1rem;
+    }
+
+    .project-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+    }
+
+    .tag {
+      font-size: 11px;
+      padding: 2px 8px;
+      border-radius: 4px;
+      background: var(--bg3);
+      color: var(--muted);
+      border: 1px solid var(--border);
+    }
+
+    /* SKILLS */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+    }
+
+    .skill-group {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.25rem;
+    }
+
+    .skill-group-label {
+      font-size: 11px;
+      color: var(--accent4);
+      letter-spacing: 0.1em;
+      margin-bottom: 1rem;
+    }
+
+    .skill-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .skill-list li {
+      font-size: 12px;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .skill-list li::before {
+      content: '▸';
+      color: var(--accent2);
+      font-size: 10px;
+    }
+
+    /* ABOUT */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: start;
+    }
+
+    .about-text {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.9;
+    }
+
+    .about-text p { margin-bottom: 1rem; }
+    .about-text strong { color: var(--text); font-weight: 500; }
+
+    .about-stats {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .stat-row {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      font-size: 12px;
+    }
+
+    .stat-label {
+      color: var(--muted);
+      min-width: 90px;
+    }
+
+    .stat-bar {
+      flex: 1;
+      height: 4px;
+      background: var(--bg3);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+
+    .stat-fill {
+      height: 100%;
+      border-radius: 2px;
+      background: var(--accent);
+    }
+
+    .stat-val {
+      color: var(--text);
+      min-width: 30px;
+      text-align: right;
+    }
+
+    /* CONTACT */
+    .contact-inner {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .contact-text h3 {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.8rem;
+      color: var(--text);
+      margin-bottom: 0.5rem;
+    }
+
+    .contact-text p {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .contact-links {
+      display: flex;
+      gap: 0.75rem;
+    }
+
+    /* FOOTER */
+    footer {
+      border-top: 1px solid var(--border);
+      text-align: center;
+      padding: 2rem;
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    /* ANIMATIONS */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
+    }
+
+    .cursor {
+      display: inline-block;
+      width: 2px;
+      height: 1.1em;
+      background: var(--accent2);
+      vertical-align: text-bottom;
+      animation: blink 1s step-end infinite;
+      margin-left: 4px;
+    }
+
+    .hero-inner > * {
+      animation: fadeUp 0.6s ease both;
+    }
+
+    .hero-prompt { animation-delay: 0.1s; }
+    .hero-name { animation-delay: 0.2s; }
+    .hero-role { animation-delay: 0.3s; }
+    .hero-bio { animation-delay: 0.4s; }
+    .hero-cta { animation-delay: 0.5s; }
+
+    @media (max-width: 700px) {
+      .projects-grid, .skills-grid, .about-grid { grid-template-columns: 1fr; }
+      .avatar-float { display: none; }
+      .hero-name { font-size: 3rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="nav-logo"><span>~/</span>mattknatt</div>
+    <ul class="nav-links">
+      <li><a href="#projects">projects</a></li>
+      <li><a href="#skills">skills</a></li>
+      <li><a href="#about">about</a></li>
+      <li><a href="#contact">contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-inner">
+      <p class="hero-prompt">whoami</p>
+      <h1 class="hero-name">Matt<br><em>Knatt</em></h1>
+      <p class="hero-role">Java Developer Student · Backend Focus<span class="cursor"></span></p>
+      <p class="hero-bio">
+        Studying Java development at <strong>IT-Högskolan</strong>, Gothenburg.<br>
+        Passionate about clean architecture, persistent data layers, and building
+        systems that are <strong>reliable under the hood</strong> — not just pretty on the surface.
+      </p>
+      <div class="hero-cta">
+        <a href="#projects" class="btn btn-primary">view projects</a>
+        <a href="https://github.com/mattknatt" class="btn btn-ghost" target="_blank">github ↗</a>
+      </div>
+    </div>
+
+    <div class="avatar-float">
+      <img src="IMG_5919.JPG" alt="Matt Knatt" />
+      <p class="avatar-label">// matt.jpg</p>
+    </div>
+  </div>
+
+  <!-- PROJECTS -->
+  <section id="projects">
+    <p class="section-tag">work</p>
+    <h2 class="section-title">Projects</h2>
+
+    <div class="projects-grid">
+      <a href="#" class="project-card">
+        <div class="project-card-header">
+          <span class="project-icon">🎵</span>
+          <span class="project-lang"><span class="lang-dot"></span>Java</span>
+        </div>
+        <p class="project-name">myPod</p>
+        <p class="project-desc">
+          A retro-inspired desktop music player with a custom Click Wheel UI.
+          Integrates the iTunes Search API and persists library data locally via JPA/Hibernate.
+        </p>
+        <div class="project-tags">
+          <span class="tag">JavaFX</span>
+          <span class="tag">Hibernate</span>
+          <span class="tag">MySQL</span>
+          <span class="tag">Jackson</span>
+          <span class="tag">JUnit 5</span>
+        </div>
+      </a>
+
+      <a href="#" class="project-card">
+        <div class="project-card-header">
+          <span class="project-icon">📅</span>
+          <span class="project-lang"><span class="lang-dot"></span>Java</span>
+        </div>
+        <p class="project-name">Spring Lab</p>
+        <p class="project-desc">
+          A full-stack meeting management system with filtering, pagination, and server-side validation.
+          Docker-ready with PostgreSQL persistence.
+        </p>
+        <div class="project-tags">
+          <span class="tag">Spring Boot</span>
+          <span class="tag">Thymeleaf</span>
+          <span class="tag">PostgreSQL</span>
+          <span class="tag">Docker</span>
+          <span class="tag">Lombok</span>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section id="skills">
+    <p class="section-tag">stack</p>
+    <h2 class="section-title">Skills</h2>
+
+    <div class="skills-grid">
+      <div class="skill-group">
+        <p class="skill-group-label">LANGUAGES</p>
+        <ul class="skill-list">
+          <li>Java 25</li>
+          <li>SQL</li>
+          <li>HTML / CSS</li>
+        </ul>
+      </div>
+
+      <div class="skill-group">
+        <p class="skill-group-label">FRAMEWORKS</p>
+        <ul class="skill-list">
+          <li>Spring Boot</li>
+          <li>JavaFX</li>
+          <li>Hibernate / JPA</li>
+          <li>Thymeleaf</li>
+        </ul>
+      </div>
+
+      <div class="skill-group">
+        <p class="skill-group-label">TOOLS & DB</p>
+        <ul class="skill-list">
+          <li>MySQL</li>
+          <li>PostgreSQL</li>
+          <li>Docker</li>
+          <li>Maven</li>
+          <li>JUnit 5 / AssertJ</li>
+          <li>Git</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <p class="section-tag">readme</p>
+    <h2 class="section-title">About</h2>
+
+    <div class="about-grid">
+      <div class="about-text">
+        <p>
+          I'm a Java developer student based in <strong>Gothenburg, Sweden</strong>,
+          currently at IT-Högskolan. My focus is on backend systems — the kind of
+          work that happens below the surface.
+        </p>
+        <p>
+          I enjoy designing data models, wiring up repositories, and making sure
+          services talk to databases cleanly and reliably. I've contributed to both
+          solo and <strong>group projects</strong>, taking ownership of API integrations,
+          persistence layers, and system initialization logic.
+        </p>
+        <p>
+          Currently deepening my knowledge of <strong>Spring ecosystem</strong>,
+          REST API design, and clean architecture patterns.
+        </p>
+      </div>
+
+      <div class="about-stats">
+        <p style="font-size:11px; color: var(--muted); letter-spacing:0.1em; margin-bottom:0.5rem;">// skill confidence</p>
+        <div class="stat-row">
+          <span class="stat-label">Java</span>
+          <div class="stat-bar"><div class="stat-fill" style="width:85%; background:var(--accent);"></div></div>
+          <span class="stat-val">85%</span>
+        </div>
+        <div class="stat-row">
+          <span class="stat-label">Spring Boot</span>
+          <div class="stat-bar"><div class="stat-fill" style="width:70%; background:var(--accent2);"></div></div>
+          <span class="stat-val">70%</span>
+        </div>
+        <div class="stat-row">
+          <span class="stat-label">JPA / ORM</span>
+          <div class="stat-bar"><div class="stat-fill" style="width:75%; background:var(--accent4);"></div></div>
+          <span class="stat-val">75%</span>
+        </div>
+        <div class="stat-row">
+          <span class="stat-label">SQL</span>
+          <div class="stat-bar"><div class="stat-fill" style="width:68%; background:var(--yellow);"></div></div>
+          <span class="stat-val">68%</span>
+        </div>
+        <div class="stat-row">
+          <span class="stat-label">Docker</span>
+          <div class="stat-bar"><div class="stat-fill" style="width:55%; background:var(--accent3);"></div></div>
+          <span class="stat-val">55%</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="contact-inner">
+      <div class="contact-text">
+        <h3>Get in touch</h3>
+        <p>Open to collaborations, internships, and interesting Java projects.</p>
+      </div>
+      <div class="contact-links">
+        <a href="https://github.com/mattknatt" class="btn btn-ghost" target="_blank">github ↗</a>
+        <a href="mailto:your@email.com" class="btn btn-primary">email me</a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>built by matt knatt &nbsp;·&nbsp; <span style="color:var(--accent2)">java dev student</span> &nbsp;·&nbsp; gothenburg, sweden</p>
+  </footer>
+
+</body>
+</html>
