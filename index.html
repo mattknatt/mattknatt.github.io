@@ -4,22 +4,22 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Mattias Hagström — Java Developer</title>
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300;1,9..144,400&family=Geist:wght@300;400;500&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --bg: #2b3137;
-      --bg2: #161b22;
-      --bg3: #21262d;
-      --border: #30363d;
-      --text: #e6edf3;
-      --muted: #7d8590;
-      --accent: #58a6ff;
-      --accent2: #3fb950;
-      --accent3: #f78166;
-      --accent4: #d2a8ff;
-      --yellow: #e3b341;
+      --bg: #111110;
+      --bg2: #1a1a18;
+      --bg3: #222220;
+      --border: rgba(255,255,255,0.08);
+      --border-hover: rgba(255,255,255,0.16);
+      --text: #f0ede8;
+      --muted: #888880;
+      --muted2: #555550;
+      --accent: #c8f060;
+      --blue: #7eb8f7;
+      --warm: #f0c060;
     }
 
     html { scroll-behavior: smooth; }
@@ -27,401 +27,270 @@
     body {
       background: var(--bg);
       color: var(--text);
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 14px;
-      line-height: 1.7;
+      font-family: 'Geist', sans-serif;
+      font-size: 15px;
+      line-height: 1.6;
       overflow-x: hidden;
     }
 
-    /* Scanline overlay */
-    body::before {
-      content: '';
-      position: fixed;
-      inset: 0;
-      background: repeating-linear-gradient(
-        0deg,
-        transparent,
-        transparent 2px,
-        rgba(0,0,0,0.03) 2px,
-        rgba(0,0,0,0.03) 4px
-      );
-      pointer-events: none;
-      z-index: 1000;
-    }
-
-    /* NAV */
     nav {
       position: fixed;
       top: 0; left: 0; right: 0;
       z-index: 100;
-      background: rgba(13,17,23,0.85);
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid var(--border);
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 0 2rem;
-      height: 52px;
+      padding: 0 2.5rem;
+      height: 56px;
+      background: rgba(17,17,16,0.85);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
     }
 
     .nav-logo {
-      color: var(--accent2);
-      font-weight: 700;
-      font-size: 13px;
-      letter-spacing: 0.05em;
+      font-family: 'Fraunces', serif;
+      font-weight: 400;
+      font-size: 17px;
+      color: var(--text);
     }
 
-    .nav-logo span { color: var(--muted); }
-
-    .nav-links {
-      display: flex;
-      gap: 2rem;
-      list-style: none;
-    }
+    .nav-links { display: flex; gap: 2.5rem; list-style: none; }
 
     .nav-links a {
       color: var(--muted);
       text-decoration: none;
-      font-size: 12px;
-      letter-spacing: 0.05em;
+      font-size: 13px;
       transition: color 0.2s;
     }
 
     .nav-links a:hover { color: var(--text); }
 
-    /* HERO */
     .hero {
       min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: center;
+      gap: 4rem;
+      padding: 7rem 2.5rem 4rem;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .hero-eyebrow {
       display: flex;
       align-items: center;
-      padding: 6rem 2rem 4rem;
-      max-width: 900px;
-      margin: 0 auto;
-      position: relative;
+      gap: 0.75rem;
+      margin-bottom: 1.5rem;
     }
 
-    .hero-inner {
-      width: 100%;
+    .hero-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--accent);
     }
 
-    .hero-prompt {
-      color: var(--muted);
+    .hero-eyebrow span {
       font-size: 12px;
-      margin-bottom: 0.5rem;
-      letter-spacing: 0.05em;
-    }
-
-    .hero-prompt::before {
-      content: '$ ';
-      color: var(--accent2);
+      font-weight: 500;
+      color: var(--accent);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
     }
 
     .hero-name {
-      font-family: 'DM Serif Display', serif;
-      font-size: clamp(3rem, 8vw, 6rem);
+      font-family: 'Fraunces', serif;
+      font-weight: 300;
+      font-size: clamp(3.2rem, 7vw, 5.5rem);
       line-height: 1.0;
       color: var(--text);
-      margin-bottom: 0.25rem;
+      margin-bottom: 1.5rem;
+      letter-spacing: -0.02em;
     }
 
-    .hero-name em {
-      font-style: italic;
-      color: var(--accent);
-    }
-
-    .hero-role {
-      font-size: 13px;
-      color: var(--accent2);
-      letter-spacing: 0.1em;
-      margin-bottom: 2rem;
-    }
-
-    .hero-role::before { content: '// '; color: var(--muted); }
+    .hero-name em { font-style: italic; color: var(--muted); }
 
     .hero-bio {
-      max-width: 520px;
+      max-width: 480px;
       color: var(--muted);
-      font-size: 13px;
-      line-height: 1.9;
+      font-size: 15px;
+      line-height: 1.8;
       margin-bottom: 2.5rem;
-      border-left: 2px solid var(--border);
-      padding-left: 1.25rem;
+      font-weight: 300;
     }
 
-    .hero-bio strong { color: var(--text); font-weight: 500; }
+    .hero-bio strong { color: var(--text); font-weight: 400; }
 
-    .hero-cta {
-      display: flex;
-      gap: 1rem;
-      flex-wrap: wrap;
-    }
+    .hero-cta { display: flex; gap: 0.75rem; flex-wrap: wrap; }
 
     .btn {
       display: inline-flex;
       align-items: center;
-      gap: 0.5rem;
-      padding: 0.6rem 1.25rem;
-      border-radius: 6px;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 12px;
+      gap: 0.4rem;
+      padding: 0.65rem 1.4rem;
+      border-radius: 100px;
+      font-family: 'Geist', sans-serif;
+      font-size: 13px;
       font-weight: 500;
       text-decoration: none;
-      letter-spacing: 0.05em;
       transition: all 0.2s;
       cursor: pointer;
       border: none;
     }
 
-    .btn-primary {
-      background: var(--accent);
-      color: var(--bg);
-    }
+    .btn-primary { background: var(--accent); color: #111110; }
+    .btn-primary:hover { background: #d4f570; transform: translateY(-1px); }
+    .btn-ghost { background: transparent; color: var(--muted); border: 1px solid var(--border-hover); }
+    .btn-ghost:hover { color: var(--text); border-color: var(--muted2); }
 
-    .btn-primary:hover { background: #79c0ff; transform: translateY(-1px); }
+    .hero-avatar { display: flex; flex-direction: column; align-items: center; gap: 0.75rem; }
 
-    .btn-ghost {
-      background: transparent;
-      color: var(--muted);
-      border: 1px solid var(--border);
-    }
-
-    .btn-ghost:hover { color: var(--text); border-color: var(--muted); }
-
-    /* Avatar */
-    .avatar-float {
-      position: absolute;
-      right: 0;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 200px;
-      height: 200px;
-      opacity: 0.85;
-    }
-
-    .avatar-float img {
-      width: 100%;
-      height: 100%;
+    .avatar-img {
+      width: 180px; height: 180px;
+      border-radius: 20px;
       object-fit: cover;
-      border-radius: 12px;
-      border: 1px solid var(--border);
       image-rendering: pixelated;
+      border: 1px solid var(--border);
     }
 
-    .avatar-label {
-      text-align: center;
-      font-size: 10px;
-      color: var(--muted);
-      margin-top: 6px;
-      letter-spacing: 0.08em;
-    }
+    .avatar-caption { font-size: 11px; color: var(--muted2); letter-spacing: 0.06em; }
 
-    /* SECTION */
-    section {
-      max-width: 900px;
-      margin: 0 auto;
-      padding: 5rem 2rem;
-      border-top: 1px solid var(--border);
-    }
+    .divider { max-width: 1000px; margin: 0 auto; height: 1px; background: var(--border); }
 
-    .section-tag {
-      font-size: 11px;
-      color: #edf5c6;
-      letter-spacing: 0.15em;
-      margin-bottom: 0.5rem;
-    }
+    section { max-width: 1000px; margin: 0 auto; padding: 5rem 2.5rem; }
 
-    .section-tag::before { content: '/* '; }
-    .section-tag::after { content: ' */'; }
+    .section-header { display: flex; align-items: baseline; gap: 1rem; margin-bottom: 3rem; }
+
+    .section-num { font-size: 11px; color: var(--muted2); font-weight: 500; letter-spacing: 0.1em; }
 
     .section-title {
-      font-family: 'DM Serif Display', serif;
-      font-size: 2.5rem;
+      font-family: 'Fraunces', serif;
+      font-weight: 300;
+      font-size: 2.2rem;
       color: var(--text);
-      margin-bottom: 3rem;
-      line-height: 1.1;
+      letter-spacing: -0.02em;
     }
 
-    /* PROJECTS */
-    .projects-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1.5rem;
-    }
+    .projects-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
 
     .project-card {
       background: var(--bg2);
       border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 1.5rem;
-      transition: border-color 0.2s, transform 0.2s;
+      border-radius: 16px;
+      padding: 1.75rem;
+      transition: border-color 0.2s, background 0.2s;
       text-decoration: none;
-      display: block;
-    }
-
-    .project-card:hover {
-      border-color: var(--accent);
-      transform: translateY(-2px);
-    }
-
-    .project-card-header {
       display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 0.75rem;
+      flex-direction: column;
+      gap: 1rem;
     }
 
-    .project-icon {
-      font-size: 20px;
-    }
+    .project-card:hover { border-color: var(--border-hover); background: var(--bg3); }
 
-    .project-lang {
-      display: flex;
-      align-items: center;
-      gap: 0.4rem;
+    .project-card-top { display: flex; align-items: center; justify-content: space-between; }
+
+    .project-badge {
       font-size: 11px;
-      color: var(--muted);
+      font-weight: 500;
+      padding: 3px 10px;
+      border-radius: 100px;
+      letter-spacing: 0.04em;
     }
 
-    .lang-dot {
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-      background: var(--yellow);
-      flex-shrink: 0;
+    .badge-live {
+      background: rgba(200,240,96,0.15);
+      color: var(--accent);
+      border: 1px solid rgba(200,240,96,0.25);
     }
+
+    .badge-java {
+      background: rgba(255,255,255,0.06);
+      color: var(--muted);
+      border: 1px solid var(--border);
+    }
+
+    .project-arrow { color: var(--muted2); font-size: 18px; transition: color 0.2s, transform 0.2s; }
+    .project-card:hover .project-arrow { color: var(--text); transform: translate(2px, -2px); }
 
     .project-name {
-      font-size: 15px;
-      font-weight: 500;
-      color: var(--accent);
-      margin-bottom: 0.5rem;
+      font-family: 'Fraunces', serif;
+      font-weight: 400;
+      font-size: 1.5rem;
+      color: var(--text);
+      letter-spacing: -0.01em;
     }
 
-    .project-desc {
-      font-size: 12px;
-      color: var(--muted);
-      line-height: 1.7;
-      margin-bottom: 1rem;
-    }
+    .project-desc { font-size: 13px; color: var(--muted); line-height: 1.7; font-weight: 300; flex: 1; }
 
-    .project-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.4rem;
-    }
+    .project-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
 
     .tag {
       font-size: 11px;
-      padding: 2px 8px;
-      border-radius: 4px;
+      padding: 3px 10px;
+      border-radius: 100px;
       background: var(--bg3);
       color: var(--muted);
       border: 1px solid var(--border);
     }
 
-    /* SKILLS */
-    .skills-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1rem;
-    }
+    .skills-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
 
     .skill-group {
       background: var(--bg2);
       border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 1.25rem;
+      border-radius: 16px;
+      padding: 1.5rem;
     }
 
     .skill-group-label {
       font-size: 11px;
-      color: #edf5c6;
+      font-weight: 500;
+      color: var(--warm);
       letter-spacing: 0.1em;
-      margin-bottom: 1rem;
+      text-transform: uppercase;
+      margin-bottom: 1.25rem;
     }
 
-    .skill-list {
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
-    }
+    .skill-list { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; }
 
     .skill-list li {
-      font-size: 12px;
-      color: var(--muted);
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-
-    .skill-list li::before {
-      content: '▸';
-      color: var(--accent2);
-      font-size: 10px;
-    }
-
-    /* ABOUT */
-    .about-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 3rem;
-      align-items: start;
-    }
-
-    .about-text {
       font-size: 13px;
       color: var(--muted);
-      line-height: 1.9;
+      font-weight: 300;
+      padding-left: 1rem;
+      position: relative;
     }
 
-    .about-text p { margin-bottom: 1rem; }
-    .about-text strong { color: var(--text); font-weight: 500; }
+    .skill-list li::before { content: '–'; position: absolute; left: 0; color: var(--muted2); }
 
-    .about-stats {
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; }
+
+    .about-text { font-size: 14px; color: var(--muted); line-height: 1.9; font-weight: 300; }
+    .about-text p { margin-bottom: 1.1rem; }
+    .about-text strong { color: var(--text); font-weight: 400; }
+
+    .about-stats { display: flex; flex-direction: column; gap: 1.25rem; }
+
+    .stats-label {
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--warm);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 0.25rem;
     }
 
-    .stat-row {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-      font-size: 12px;
-    }
+    .stat-row { display: flex; align-items: center; gap: 1rem; font-size: 13px; }
+    .stat-label { color: var(--muted); min-width: 90px; font-weight: 300; }
 
-    .stat-label {
-      color: var(--muted);
-      min-width: 90px;
-    }
+    .stat-bar { flex: 1; height: 3px; background: var(--bg3); border-radius: 2px; overflow: hidden; }
+    .stat-fill { height: 100%; border-radius: 2px; }
+    .stat-val { color: var(--muted2); min-width: 30px; text-align: right; font-size: 12px; }
 
-    .stat-bar {
-      flex: 1;
-      height: 4px;
-      background: var(--bg3);
-      border-radius: 2px;
-      overflow: hidden;
-    }
-
-    .stat-fill {
-      height: 100%;
-      border-radius: 2px;
-      background: var(--accent);
-    }
-
-    .stat-val {
-      color: var(--text);
-      min-width: 30px;
-      text-align: right;
-    }
-
-    /* CONTACT */
     .contact-inner {
       background: var(--bg2);
       border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 2rem;
+      border-radius: 20px;
+      padding: 3rem;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -430,65 +299,41 @@
     }
 
     .contact-text h3 {
-      font-family: 'DM Serif Display', serif;
-      font-size: 1.8rem;
+      font-family: 'Fraunces', serif;
+      font-weight: 300;
+      font-size: 2rem;
       color: var(--text);
       margin-bottom: 0.5rem;
+      letter-spacing: -0.02em;
     }
 
-    .contact-text p {
-      color: var(--muted);
-      font-size: 12px;
-    }
+    .contact-text p { color: var(--muted); font-size: 13px; font-weight: 300; }
+    .contact-links { display: flex; gap: 0.75rem; }
 
-    .contact-links {
-      display: flex;
-      gap: 0.75rem;
-    }
-
-    /* FOOTER */
     footer {
       border-top: 1px solid var(--border);
       text-align: center;
       padding: 2rem;
-      font-size: 11px;
-      color: var(--muted);
+      font-size: 12px;
+      color: var(--muted2);
+      font-weight: 300;
     }
 
-    /* ANIMATIONS */
     @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(20px); }
+      from { opacity: 0; transform: translateY(16px); }
       to { opacity: 1; transform: translateY(0); }
     }
 
-    @keyframes blink {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0; }
-    }
-
-    .cursor {
-      display: inline-block;
-      width: 2px;
-      height: 1.1em;
-      background: var(--accent2);
-      vertical-align: text-bottom;
-      animation: blink 1s step-end infinite;
-      margin-left: 4px;
-    }
-
-    .hero-inner > * {
-      animation: fadeUp 0.6s ease both;
-    }
-
-    .hero-prompt { animation-delay: 0.1s; }
-    .hero-name { animation-delay: 0.2s; }
-    .hero-role { animation-delay: 0.3s; }
-    .hero-bio { animation-delay: 0.4s; }
-    .hero-cta { animation-delay: 0.5s; }
+    .hero-eyebrow { animation: fadeUp 0.5s ease both; animation-delay: 0.05s; }
+    .hero-name    { animation: fadeUp 0.5s ease both; animation-delay: 0.15s; }
+    .hero-bio     { animation: fadeUp 0.5s ease both; animation-delay: 0.25s; }
+    .hero-cta     { animation: fadeUp 0.5s ease both; animation-delay: 0.35s; }
+    .hero-avatar  { animation: fadeUp 0.5s ease both; animation-delay: 0.2s; }
 
     @media (max-width: 700px) {
+      .hero { grid-template-columns: 1fr; }
+      .hero-avatar { display: none; }
       .projects-grid, .skills-grid, .about-grid { grid-template-columns: 1fr; }
-      .avatar-float { display: none; }
       .hero-name { font-size: 3rem; }
     }
   </style>
@@ -496,48 +341,73 @@
 <body>
 
   <nav>
-    <div class="nav-logo"><span>~/</span>mattknatt</div>
+    <div class="nav-logo">Mattias Hagström</div>
     <ul class="nav-links">
-      <li><a href="#projects">projects</a></li>
-      <li><a href="#skills">skills</a></li>
-      <li><a href="#about">about</a></li>
-      <li><a href="#contact">contact</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#contact">Contact</a></li>
     </ul>
   </nav>
 
-  <!-- HERO -->
   <div class="hero">
     <div class="hero-inner">
-      <p class="hero-prompt">whoami</p>
-      <h1 class="hero-name">Mattias<br><em>Hagström</em></h1>
-      <p class="hero-role">Java Developer Student · Backend Focus<span class="cursor"></span></p>
+      <div class="hero-eyebrow">
+        <div class="hero-dot"></div>
+        <span>Java Developer Student · Gothenburg</span>
+      </div>
+      <h1 class="hero-name">Backend<br><em>engineer</em><br>in training.</h1>
       <p class="hero-bio">
-        Studying Java development at <strong>IT-Högskolan</strong>, Gothenburg.<br>
-        Passionate about clean architecture, persistent data layers, and building
-        systems that are <strong>reliable under the hood</strong> — not just pretty on the surface.
+        Studying at <strong>IT-Högskolan</strong>, focused on building systems
+        that are reliable under the hood. Passionate about clean architecture,
+        persistent data layers, and shipping things that actually work.
       </p>
       <div class="hero-cta">
-        <a href="#projects" class="btn btn-primary">view projects</a>
-        <a href="https://github.com/mattknatt" class="btn btn-ghost" target="_blank">github ↗</a>
+        <a href="#projects" class="btn btn-primary">View projects</a>
+        <a href="https://github.com/mattknatt" class="btn btn-ghost" target="_blank">GitHub ↗</a>
       </div>
     </div>
 
-    <div class="avatar-float">
-      <img src="IMG_5919.JPG" alt="Matt Knatt" />
-      <p class="avatar-label">// matt.jpg</p>
+    <div class="hero-avatar">
+      <img src="IMG_5919.JPG" alt="Mattias Hagström" class="avatar-img" />
+      <span class="avatar-caption">Mattias Hagström</span>
     </div>
   </div>
 
-  <!-- PROJECTS -->
-  <section id="projects">
-    <p class="section-tag">work</p>
-    <h2 class="section-title">Projects</h2>
+  <div class="divider"></div>
 
+  <section id="projects">
+    <div class="section-header">
+      <span class="section-num">01</span>
+      <h2 class="section-title">Projects</h2>
+    </div>
     <div class="projects-grid">
       <a href="#" class="project-card">
-        <div class="project-card-header">
-          <span class="project-icon">🎵</span>
-          <span class="project-lang"><span class="lang-dot"></span>Java</span>
+        <div class="project-card-top">
+          <span class="project-badge badge-live">Live</span>
+          <span class="project-arrow">↗</span>
+        </div>
+        <p class="project-name">boka.</p>
+        <p class="project-desc">
+          A high-performance gym class booking app with Google OAuth2, atomic reservations,
+          and live availability. Deployed on Fly.io with a Neon serverless Postgres backend
+          and a full CI/CD pipeline via GitHub Actions.
+        </p>
+        <div class="project-tags">
+          <span class="tag">Spring Boot</span>
+          <span class="tag">React 18</span>
+          <span class="tag">TypeScript</span>
+          <span class="tag">PostgreSQL</span>
+          <span class="tag">Docker</span>
+          <span class="tag">Fly.io</span>
+          <span class="tag">GitHub Actions</span>
+        </div>
+      </a>
+
+      <a href="#" class="project-card">
+        <div class="project-card-top">
+          <span class="project-badge badge-java">Java</span>
+          <span class="project-arrow">↗</span>
         </div>
         <p class="project-name">myPod</p>
         <p class="project-desc">
@@ -552,60 +422,45 @@
           <span class="tag">JUnit 5</span>
         </div>
       </a>
-
-      <a href="#" class="project-card">
-        <div class="project-card-header">
-          <span class="project-icon">📅</span>
-          <span class="project-lang"><span class="lang-dot"></span>Java</span>
-        </div>
-        <p class="project-name">Spring Lab</p>
-        <p class="project-desc">
-          A full-stack meeting management system with filtering, pagination, and server-side validation.
-          Docker-ready with PostgreSQL persistence.
-        </p>
-        <div class="project-tags">
-          <span class="tag">Spring Boot</span>
-          <span class="tag">Thymeleaf</span>
-          <span class="tag">PostgreSQL</span>
-          <span class="tag">Docker</span>
-          <span class="tag">Lombok</span>
-        </div>
-      </a>
     </div>
   </section>
 
-  <!-- SKILLS -->
-  <section id="skills">
-    <p class="section-tag">stack</p>
-    <h2 class="section-title">Skills</h2>
+  <div class="divider"></div>
 
+  <section id="skills">
+    <div class="section-header">
+      <span class="section-num">02</span>
+      <h2 class="section-title">Skills</h2>
+    </div>
     <div class="skills-grid">
       <div class="skill-group">
-        <p class="skill-group-label">LANGUAGES</p>
+        <p class="skill-group-label">Languages</p>
         <ul class="skill-list">
           <li>Java 25</li>
+          <li>TypeScript</li>
           <li>SQL</li>
           <li>HTML / CSS</li>
         </ul>
       </div>
-
       <div class="skill-group">
-        <p class="skill-group-label">FRAMEWORKS</p>
+        <p class="skill-group-label">Frameworks</p>
         <ul class="skill-list">
           <li>Spring Boot</li>
+          <li>React 18</li>
           <li>JavaFX</li>
           <li>Hibernate / JPA</li>
           <li>Thymeleaf</li>
         </ul>
       </div>
-
       <div class="skill-group">
-        <p class="skill-group-label">TOOLS & DB</p>
+        <p class="skill-group-label">Tools & Databases</p>
         <ul class="skill-list">
           <li>MySQL</li>
           <li>PostgreSQL</li>
           <li>Docker</li>
           <li>Maven</li>
+          <li>Fly.io</li>
+          <li>GitHub Actions</li>
           <li>JUnit 5 / AssertJ</li>
           <li>Git</li>
         </ul>
@@ -613,11 +468,13 @@
     </div>
   </section>
 
-  <!-- ABOUT -->
-  <section id="about">
-    <p class="section-tag">readme</p>
-    <h2 class="section-title">About</h2>
+  <div class="divider"></div>
 
+  <section id="about">
+    <div class="section-header">
+      <span class="section-num">03</span>
+      <h2 class="section-title">About</h2>
+    </div>
     <div class="about-grid">
       <div class="about-text">
         <p>
@@ -632,58 +489,58 @@
           persistence layers, and system initialization logic.
         </p>
         <p>
-          Currently deepening my knowledge of <strong>Spring ecosystem</strong>,
+          Currently deepening my knowledge of the <strong>Spring ecosystem</strong>,
           REST API design, and clean architecture patterns.
         </p>
       </div>
-
       <div class="about-stats">
-        <p style="font-size:11px; color: var(--muted); letter-spacing:0.1em; margin-bottom:0.5rem;">// skill confidence</p>
+        <p class="stats-label">Skill confidence</p>
         <div class="stat-row">
           <span class="stat-label">Java</span>
-          <div class="stat-bar"><div class="stat-fill" style="width:85%; background:var(--accent);"></div></div>
+          <div class="stat-bar"><div class="stat-fill" style="width:85%; background:var(--blue);"></div></div>
           <span class="stat-val">85%</span>
         </div>
         <div class="stat-row">
           <span class="stat-label">Spring Boot</span>
-          <div class="stat-bar"><div class="stat-fill" style="width:70%; background:var(--accent2);"></div></div>
+          <div class="stat-bar"><div class="stat-fill" style="width:70%; background:var(--accent);"></div></div>
           <span class="stat-val">70%</span>
         </div>
         <div class="stat-row">
           <span class="stat-label">JPA / ORM</span>
-          <div class="stat-bar"><div class="stat-fill" style="width:75%; background:var(--accent4);"></div></div>
+          <div class="stat-bar"><div class="stat-fill" style="width:75%; background:var(--accent);"></div></div>
           <span class="stat-val">75%</span>
         </div>
         <div class="stat-row">
           <span class="stat-label">SQL</span>
-          <div class="stat-bar"><div class="stat-fill" style="width:68%; background:var(--yellow);"></div></div>
+          <div class="stat-bar"><div class="stat-fill" style="width:68%; background:var(--warm);"></div></div>
           <span class="stat-val">68%</span>
         </div>
         <div class="stat-row">
           <span class="stat-label">Docker</span>
-          <div class="stat-bar"><div class="stat-fill" style="width:55%; background:var(--accent3);"></div></div>
+          <div class="stat-bar"><div class="stat-fill" style="width:55%; background:var(--warm);"></div></div>
           <span class="stat-val">55%</span>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- CONTACT -->
+  <div class="divider"></div>
+
   <section id="contact">
     <div class="contact-inner">
       <div class="contact-text">
-        <h3>Get in touch</h3>
+        <h3>Let's work together.</h3>
         <p>Open to collaborations, internships, and interesting Java projects.</p>
       </div>
       <div class="contact-links">
-        <a href="https://github.com/mattknatt" class="btn btn-ghost" target="_blank">github ↗</a>
-        <a href="mailto:your@email.com" class="btn btn-primary">email me</a>
+        <a href="https://github.com/mattknatt" class="btn btn-ghost" target="_blank">GitHub ↗</a>
+        <a href="mailto:hagstrommattias@outlook.com" class="btn btn-primary">Email me</a>
       </div>
     </div>
   </section>
 
   <footer>
-    <p>built by matt knatt &nbsp;·&nbsp; <span style="color:var(--accent2)">java dev student</span> &nbsp;·&nbsp; gothenburg, sweden</p>
+    <p>Mattias Hagström &nbsp;·&nbsp; Java Developer Student &nbsp;·&nbsp; Gothenburg, Sweden</p>
   </footer>
 
 </body>
