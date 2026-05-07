@@ -208,6 +208,12 @@
       border: 1px solid var(--border);
     }
 
+    .badge-ai {
+      background: rgba(126,184,247,0.12);
+      color: var(--blue);
+      border: 1px solid rgba(126,184,247,0.22);
+    }
+
     .project-arrow { color: var(--muted2); font-size: 18px; transition: color 0.2s, transform 0.2s; }
     .project-card:hover .project-arrow { color: var(--text); transform: translate(2px, -2px); }
 
@@ -231,6 +237,22 @@
       color: var(--muted);
       border: 1px solid var(--border);
     }
+
+    .project-links { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+
+    .project-link {
+      font-size: 11px;
+      font-weight: 500;
+      padding: 3px 10px;
+      border-radius: 100px;
+      background: transparent;
+      color: var(--muted);
+      border: 1px solid var(--border-hover);
+      text-decoration: none;
+      transition: color 0.2s, border-color 0.2s;
+    }
+
+    .project-link:hover { color: var(--text); border-color: var(--muted2); }
 
     .skills-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
 
@@ -382,6 +404,7 @@
       <h2 class="section-title">Projects</h2>
     </div>
     <div class="projects-grid">
+
       <a href="https://boka.fly.dev" target="_blank" class="project-card">
         <div class="project-card-top">
           <span class="project-badge badge-live">Live</span>
@@ -404,6 +427,33 @@
         </div>
       </a>
 
+      <div class="project-card">
+        <a href="ai-chat-ui-weld-sigma.vercel.app" target="_blank" class="project-card">
+        <div class="project-card-top">
+          <span class="project-badge badge-ai">AI</span>
+          <span class="project-arrow" style="opacity:0.4;">↗</span>
+        </div>
+        <p class="project-name">Personal AI Companion</p>
+        <p class="project-desc">
+          A full-stack AI chat app with a terminal-inspired UI. Built on a custom Spring Boot
+          middleware layer that manages personalities, per-session conversation memory, and
+          resilient retries with exponential backoff. Frontend deployed on Vercel, backend on Fly.io.
+        </p>
+        <div class="project-tags">
+          <span class="tag">Spring Boot</span>
+          <span class="tag">React 19</span>
+          <span class="tag">TypeScript</span>
+          <span class="tag">Vite</span>
+          <span class="tag">OpenRouter</span>
+          <span class="tag">Fly.io</span>
+          <span class="tag">Vercel</span>
+        </div>
+        <div class="project-links">
+          <a href="https://github.com/mattknatt/spring-llm-gateway" target="_blank" class="project-link">Backend ↗</a>
+          <a href="https://github.com/mattknatt/chat-frontend" target="_blank" class="project-link">Frontend ↗</a>
+        </div>
+      </div>
+
       <a href="https://github.com/mattknatt/myPod" target="_blank" class="project-card">
         <div class="project-card-top">
           <span class="project-badge badge-java">Java</span>
@@ -422,6 +472,7 @@
           <span class="tag">JUnit 5</span>
         </div>
       </a>
+
     </div>
   </section>
 
